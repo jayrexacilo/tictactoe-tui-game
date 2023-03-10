@@ -42,11 +42,11 @@ console.log(displayLayout);
 function main(rerun) {
   readline.question('X: your move? ', move => {
     console.clear();
-    if(validateMove(move)) return;
+    if(!isValidMove(move)) return;
 
-    const newMove = '_'+move;
-    xMoves.push(newMove);
-    displayLayout = layout.replace(newMove, ' X ');
+    const _move = '_'+move;
+    xMoves.push(_move);
+    displayLayout = layout.replace(_move, ' X ');
 
     removeMovesLeftOnMove(xMoves);
     updateLayout(xMoves, 'X');
@@ -120,15 +120,15 @@ const processGame = () => {
     }
   }
 };
-const validateMove = (move) => {
+const isValidMove = (move) => {
   if(!movesLeft.includes('_'+move)) {
     console.log('\n' + move + ' IS INVALID MOVE!!');
     console.log('\nAvailable move(s) => ', movesLeft.map(item => +item.replace('_', '')));
     console.log(displayLayout);
     main(main);
-    return true;
+    return false;
   }
-  return false;
+  return true;
 };
 const removeMovesLeftOnMove = who => {
   movesLeft = movesLeft.filter(item => !who.includes(item));
